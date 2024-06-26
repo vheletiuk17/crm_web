@@ -1,0 +1,28 @@
+.container {
+    width: 100%;
+    height: 250px;
+    background: white;
+    display: flex;
+    position: relative;
+
+}
+
+.formContainer {
+    display: flex;
+    position: absolute;
+    right: -1600px;
+    bottom: 50px;
+}
+.form{
+    display: flex;
+}
+
+.btn_edit{
+    position: absolute;
+    right: -1700px;
+    bottom: 70px;
+}
+
+.comment{
+    width: 350px;
+}

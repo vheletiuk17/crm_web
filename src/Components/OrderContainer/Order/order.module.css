@@ -1,0 +1,13 @@
+
+
+tbody:nth-child(odd){
+    background: rgba(128, 128, 128, 0.52);
+}
+.table_container:hover{
+    background: green;
+    color: white;
+}
+b{
+    text-decoration: none;
+    font-weight: 400;
+}

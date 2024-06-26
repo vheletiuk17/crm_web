@@ -1,0 +1,41 @@
+.body{
+    font-family: 'Kanit', sans-serif;
+    font-weight: 500;
+}
+
+.father_container{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100px;
+    background: rgba(34, 139, 34, 0.84);
+}
+
+.header_logo{
+    width: 70px;
+    margin-left: 50px;
+    color: white;
+    font-size: 24px;
+}
+.btn{
+    font-family: 'Kanit', sans-serif;
+    font-weight: 900;
+    width: 180px;
+    height: 40px;
+    background: white;
+    border: 0.2px solid rgba(0, 0, 0, 0.37);
+    border-radius: 12px;
+}
+.btn_container{
+    width: 380px;
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    right: 50px;
+
+}
+
+.text_btn{
+    text-decoration: none;
+    color: black;
+}
