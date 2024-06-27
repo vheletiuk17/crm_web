@@ -21,14 +21,14 @@ const Orders: FC<IProps> = () => {
     function handleSortClick(key: string) {
         const currentSort = query.get('sort');
         if (currentSort === key) {
-            setQuery({ sort: `-${key}`, page: page || '1' });
+            setQuery({sort: `-${key}`, page: page || '1'});
         } else {
-            setQuery({ sort: key, page: page || '1' });
+            setQuery({sort: key, page: page || '1'});
         }
     }
 
     function handleChange(event: React.ChangeEvent<unknown>, value: number) {
-        setQuery({ sort: sort || '-id', page: value.toString() });
+        setQuery({sort: sort || '-id', page: value.toString()});
     }
 
     useEffect(() => {
@@ -43,34 +43,45 @@ const Orders: FC<IProps> = () => {
         return '';
     };
 
-        return (
+    return (
         <>
             {isLoading && <Box sx={{width: '100%'}}><LinearProgress color="success"/></Box>}
             <table className={css.table_container}>
                 <thead className={css.header_table_name}>
                 <tr>
                     <th className={css.id}><span onClick={() => handleSortClick("id")}>Id{getSortIcon("id")}</span></th>
-                    <th className={css.name}><span onClick={() => handleSortClick("name")}>Name{getSortIcon("name")}</span></th>
-                    <th className={css.surname}><span onClick={() => handleSortClick("surname")}>Surname{getSortIcon("surname")}</span></th>
-                    <th className={css.email}><span onClick={() => handleSortClick("email")}>Email{getSortIcon("email")}</span></th>
-                    <th className={css.phone}><span onClick={() => handleSortClick("phone")}>Phone{getSortIcon("phone")}</span></th>
-                    <th className={css.age}><span onClick={() => handleSortClick("age")}>Age{getSortIcon("age")}</span></th>
-                    <th className={css.course}><span onClick={() => handleSortClick("course")}>Course{getSortIcon("course")}</span></th>
+                    <th className={css.name}><span
+                        onClick={() => handleSortClick("name")}>Name{getSortIcon("name")}</span></th>
+                    <th className={css.surname}><span
+                        onClick={() => handleSortClick("surname")}>Surname{getSortIcon("surname")}</span></th>
+                    <th className={css.email}><span
+                        onClick={() => handleSortClick("email")}>Email{getSortIcon("email")}</span></th>
+                    <th className={css.phone}><span
+                        onClick={() => handleSortClick("phone")}>Phone{getSortIcon("phone")}</span></th>
+                    <th className={css.age}><span onClick={() => handleSortClick("age")}>Age{getSortIcon("age")}</span>
+                    </th>
+                    <th className={css.course}><span
+                        onClick={() => handleSortClick("course")}>Course{getSortIcon("course")}</span></th>
                     <th className={css.course_format}><span
                         onClick={() => handleSortClick("course_format")}>Course format{getSortIcon("course_format")}</span>
                     </th>
                     <th className={css.course_type}><span
                         onClick={() => handleSortClick("course_type")}>Course type{getSortIcon("course_type")}</span>
                     </th>
-                    <th className={css.sumsum}><span onClick={() => handleSortClick("sum")}>Sum{getSortIcon("sum")}</span></th>
+                    <th className={css.sumsum}><span
+                        onClick={() => handleSortClick("sum")}>Sum{getSortIcon("sum")}</span></th>
                     <th className={css.alreadyPaid}><span
                         onClick={() => handleSortClick("alreadyPaid")}>Already Paid{getSortIcon("alreadyPaid")}</span>
                     </th>
-                    <th className={css.created_at}><span onClick={() => handleSortClick("created_at")}>Created At{getSortIcon("created_at")}</span>
+                    <th className={css.created_at}><span
+                        onClick={() => handleSortClick("created_at")}>Created At{getSortIcon("created_at")}</span>
                     </th>
-                    <th className={css.status}><span onClick={() => handleSortClick("status")}>Status{getSortIcon("status")}</span></th>
-                    <th className={css.group}><span onClick={() => handleSortClick("group")}>Group{getSortIcon("group")}</span></th>
-                    <th className={css.manager}><span onClick={() => handleSortClick("manager")}>Manager{getSortIcon("manager")}</span></th>
+                    <th className={css.status}><span
+                        onClick={() => handleSortClick("status")}>Status{getSortIcon("status")}</span></th>
+                    <th className={css.group}><span
+                        onClick={() => handleSortClick("group")}>Group{getSortIcon("group")}</span></th>
+                    <th className={css.manager}><span
+                        onClick={() => handleSortClick("manager")}>Manager{getSortIcon("manager")}</span></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -78,7 +89,7 @@ const Orders: FC<IProps> = () => {
 
                 {orders.data.map((item) => (<Order key={item.id} order={item}/>))}
             </table>
-            <div  className={css.btn_page}>
+            <div className={css.btn_page}>
                 <Stack spacing={2}>
                     <Pagination
                         count={orders.meta.total}

@@ -1,31 +1,25 @@
-import React, { FC, useEffect, useState } from "react";
+import React, {FC, useEffect, useState} from "react";
 import css from './orderMoreDetailes.module.css'
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { Box, Button, Modal, TextField, Typography } from "@mui/material";
-import { green } from "@mui/material/colors";
-import { IComment } from "../../../Interface/commentInterface";
-import { useAppDispatch } from "../../../Hook/reduxHooks";
+import {Controller, SubmitHandler, useForm} from "react-hook-form";
+import {Box, Button, Modal, TextField, Typography} from "@mui/material";
+import {green} from "@mui/material/colors";
+import {IComment} from "../../../Interface/commentInterface";
+import {useAppDispatch} from "../../../Hook/reduxHooks";
 import {Sort} from "../../SortContainer/Sort";
 
 interface IProps {
     details: number;
 }
 
-const OrderMoreDetails: FC<IProps> = ({ details }) => {
-    const { handleSubmit, control, watch, formState: { errors } } = useForm<IComment>();
+const OrderMoreDetails: FC<IProps> = ({details}) => {
+    const {handleSubmit, control, watch, formState: {errors}} = useForm<IComment>();
     const dispatch = useAppDispatch();
-    const watchedFields = watch();
+
 
     const comment: SubmitHandler<IComment> = async (user) => {
-        // const {meta: {requestStatus}} = await dispatch(authActions.login({user}))
+
     }
 
-    const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-    useEffect(() => {
-        // Check if any field has a value
-        const hasValue = Object.values(watchedFields).some(value => value && value.length > 0);
-        setIsButtonDisabled(!hasValue);
-    }, [watchedFields]);
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
@@ -46,9 +40,11 @@ const OrderMoreDetails: FC<IProps> = ({ details }) => {
 
     return (
         <div className={css.container}>
+
+
             <div className={css.formContainer}>
                 <form onSubmit={handleSubmit(comment)} className={css.form}>
-                    <Controller control={control} name={"comment"} render={({ field }) => (
+                    <Controller control={control} name={"comment"} render={({field}) => (
                         <TextField
                             type="text"
                             label="comment"
@@ -62,26 +58,26 @@ const OrderMoreDetails: FC<IProps> = ({ details }) => {
                             sx={{
                                 '& .MuiOutlinedInput-root': {
                                     '&.Mui-focused fieldset': {
-                                        borderColor: green[900], // Колір рамки при фокусі
+                                        borderColor: green[900],
                                     },
                                 }, '& .MuiInputLabel-root.Mui-focused': {
-                                    color: green[900], // Колір тексту мітки при фокусі
+                                    color: green[900],
                                 },
                             }}
                         />
-                    )} />
+                    )}/>
                     <Button
                         size={"medium"}
-                        style={{ background: green[900] }}
+                        style={{background: green[900]}}
                         type="submit"
                         variant={"contained"}
-                        sx={{ ml: 2, width: '50px', height: '40px' }}>
+                        sx={{ml: 2, width: '50px', height: '40px'}}>
                         Submit
                     </Button>
                 </form>
             </div>
             <div className={css.btn_edit}>
-                <Button onClick={handleOpen}>Open modal</Button>
+                <Button className={css.modal_btn} onClick={handleOpen}>Edit</Button>
                 <Modal
                     open={open}
                     onClose={handleClose}
@@ -100,4 +96,4 @@ const OrderMoreDetails: FC<IProps> = ({ details }) => {
     );
 };
 
-export { OrderMoreDetails };
+export {OrderMoreDetails};

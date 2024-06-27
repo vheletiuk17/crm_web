@@ -25,7 +25,8 @@ const Header = () => {
                 VH17_CRM
             </div>
             <div className={css.btn_container}>
-                <button className={css.btn}><NavLink className={css.text_btn} to={'/settings'}>Admin Settings</NavLink></button>
+                <button className={css.btn}><NavLink className={css.text_btn} to={'/settings'}>Admin Settings</NavLink>
+                </button>
                 <button onClick={handleLogout} className={css.btn}>Exit</button>
             </div>
         </div>

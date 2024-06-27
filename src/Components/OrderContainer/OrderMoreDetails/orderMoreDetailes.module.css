@@ -15,6 +15,7 @@
 }
 .form{
     display: flex;
+    width: 500px;
 }
 
 .btn_edit{
@@ -24,5 +25,20 @@
 }
 
 .comment{
-    width: 350px;
+    width: 400px;
+}
+
+.modal_btn{
+    width: 80px;
+    height: 40px;
+    background: green;
+    color: white;
+    font-weight: 600;
+}
+
+.modal_btn:hover{
+    background: green;
+    color: white;
+    transform: scale(1.1);
+    transition: 1s;
 }

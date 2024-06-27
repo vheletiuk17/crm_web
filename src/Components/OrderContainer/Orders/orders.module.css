@@ -1,12 +1,14 @@
-.table_container{
+.table_container {
     width: 100%;
 }
-.header_table_name{
+
+.header_table_name {
     width: 100%;
     color: white;
     /*background: green;*/
 }
-th{
+
+th {
     background: green;
 }
 
@@ -18,7 +20,7 @@ table tr:nth-child(even) {
     background-color: rgba(128, 128, 128, 0.55);
 }
 
-.btn_page{
+.btn_page {
     height: 62px;
     display: flex;
     align-items: center;
