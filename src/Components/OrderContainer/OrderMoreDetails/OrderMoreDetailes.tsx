@@ -1,11 +1,12 @@
-import React, {FC, useEffect, useState} from "react";
+import React, {FC, useState} from "react";
 import css from './orderMoreDetailes.module.css'
 import {Controller, SubmitHandler, useForm} from "react-hook-form";
 import {Box, Button, Modal, TextField, Typography} from "@mui/material";
 import {green} from "@mui/material/colors";
 import {IComment} from "../../../Interface/commentInterface";
-import {useAppDispatch} from "../../../Hook/reduxHooks";
+// import {useAppDispatch} from "../../../Hook/reduxHooks";
 import {Sort} from "../../SortContainer/Sort";
+
 
 interface IProps {
     details: number;
@@ -13,7 +14,7 @@ interface IProps {
 
 const OrderMoreDetails: FC<IProps> = ({details}) => {
     const {handleSubmit, control, watch, formState: {errors}} = useForm<IComment>();
-    const dispatch = useAppDispatch();
+    // const dispatch = useAppDispatch();
 
 
     const comment: SubmitHandler<IComment> = async (user) => {
@@ -77,7 +78,12 @@ const OrderMoreDetails: FC<IProps> = ({details}) => {
                 </form>
             </div>
             <div className={css.btn_edit}>
-                <Button className={css.modal_btn} onClick={handleOpen}>Edit</Button>
+                <Button onClick={handleOpen}
+                        size={"medium"}
+                        style={{background: green[900]}}
+                        type="submit"
+                        variant={"contained"}
+                        sx={{ml: 2, width: '50px', height: '40px'}}>Edit</Button>
                 <Modal
                     open={open}
                     onClose={handleClose}
@@ -96,4 +102,6 @@ const OrderMoreDetails: FC<IProps> = ({details}) => {
     );
 };
 
-export {OrderMoreDetails};
+export {
+    OrderMoreDetails
+};

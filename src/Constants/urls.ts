@@ -2,6 +2,7 @@ const baseURL = 'http://localhost:3003'
 
 const auth = `/auth`;
 const orders = `/orders`;
+const comments = `/comments`
 
 
 const urls = {
@@ -11,7 +12,8 @@ const urls = {
         logout: `${auth}/logout`,
         refresh: `${auth}/refresh`
     },
-    orders: orders
+    orders: orders,
+    comment: comments
 }
 
 export {baseURL, urls}
