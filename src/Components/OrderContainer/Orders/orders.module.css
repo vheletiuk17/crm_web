@@ -27,3 +27,49 @@ table tr:nth-child(even) {
     justify-content: center;
     background: green;
 }
+
+.id{
+    color: white;
+}
+.name{
+    color: white;
+}
+.surname{
+  color: white;
+}
+.email{
+    color: white;
+}
+.phone{
+    color: white;
+}
+.age{
+   color: white;
+}
+.course{
+    color: white;
+}
+.course_format{
+    color: white;
+}
+.course_type{
+    color: white;
+}
+.sumsum{
+    color: white;
+}
+.alreadyPaid{
+    color: white;
+}
+.created_at{
+    color: white;
+}
+.status{
+    color: white;
+}
+.group{
+    color: white;
+}
+.manager{
+    color: white;
+}
