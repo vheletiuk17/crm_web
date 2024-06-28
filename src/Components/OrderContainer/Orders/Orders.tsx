@@ -93,7 +93,7 @@ const Orders: FC<IProps> = () => {
                 <Stack spacing={2}>
                     <Pagination
                         count={orders.meta.total}
-                        page={+page}
+                        page={orders.meta.page}
                         onChange={handleChange}
                         size="medium"
                         sx={{
