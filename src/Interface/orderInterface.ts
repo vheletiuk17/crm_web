@@ -17,6 +17,7 @@ export interface IOrder{
 }
 
 export interface IPageOrder{
+    filter: string;
     data: IOrder[],
     meta: {
         page: number,

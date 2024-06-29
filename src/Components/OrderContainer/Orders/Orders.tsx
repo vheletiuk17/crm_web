@@ -1,4 +1,4 @@
-import {FC, PropsWithChildren, useEffect} from "react";
+import {FC, PropsWithChildren, useEffect, useState} from "react";
 
 import {useSearchParams} from "react-router-dom";
 import {Box, LinearProgress, Pagination, Stack} from "@mui/material";
@@ -6,6 +6,7 @@ import {Order} from "../Order/Order";
 import css from './orders.module.css'
 import {useAppDispatch, useAppSelector} from "../../../Hook/reduxHooks";
 import {orderActions} from "../../../Redux/Slice/orderSlice";
+
 
 interface IProps extends PropsWithChildren {
 
@@ -43,9 +44,10 @@ const Orders: FC<IProps> = () => {
         return '';
     };
 
+
     return (
         <>
-            {isLoading && <Box sx={{width: '100%'}}><LinearProgress color="success"/></Box>}
+
             <table className={css.table_container}>
                 <thead className={css.header_table_name}>
                 <tr>

@@ -3,6 +3,7 @@ const baseURL = 'http://localhost:3003'
 const auth = `/auth`;
 const orders = `/orders`;
 const comments = `/comments`
+const filters = `/orders/filtered`
 
 
 const urls = {
@@ -13,7 +14,8 @@ const urls = {
         refresh: `${auth}/refresh`
     },
     orders: orders,
-    comment: comments
+    comment: comments,
+    filter: filters
 }
 
 export {baseURL, urls}

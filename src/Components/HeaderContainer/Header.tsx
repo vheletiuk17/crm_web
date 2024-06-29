@@ -14,7 +14,6 @@ const Header = () => {
         try {
             loginService.deleteTokens();
             navigate('/login');
-            window.location.reload();
         } catch (error) {
             console.error('Помилка при виході з акаунту', error);
         }

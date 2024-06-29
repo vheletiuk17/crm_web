@@ -40,10 +40,10 @@ const OrderMoreDetails: FC<IProps> = ({details}) => {
     };
 
     return (
-        <div className={css.container}>
+        <tr className={css.container}>
 
 
-            <div className={css.formContainer}>
+            <td className={css.formContainer}>
                 <form onSubmit={handleSubmit(comment)} className={css.form}>
                     <Controller control={control} name={"comment"} render={({field}) => (
                         <TextField
@@ -76,8 +76,8 @@ const OrderMoreDetails: FC<IProps> = ({details}) => {
                         Submit
                     </Button>
                 </form>
-            </div>
-            <div className={css.btn_edit}>
+            </td>
+            <td className={css.btn_edit}>
                 <Button onClick={handleOpen}
                         size={"medium"}
                         style={{background: green[900]}}
@@ -97,8 +97,8 @@ const OrderMoreDetails: FC<IProps> = ({details}) => {
 
                     </Box>
                 </Modal>
-            </div>
-        </div>
+            </td>
+        </tr>
     );
 };
 
