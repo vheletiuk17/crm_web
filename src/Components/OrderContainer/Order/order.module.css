@@ -12,3 +12,45 @@ b {
     text-decoration: none;
     font-weight: 400;
 }
+
+@media (max-width: 1250px) {
+    td {
+        font-size: 12px;
+
+    }
+
+    th {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 890px) {
+    td {
+        font-size: 10px;
+
+    }
+
+    th {
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 750px) {
+    td {
+        font-size: 8px;
+    }
+
+    th {
+        font-size: 8px;
+    }
+}
+
+@media (max-width: 600px) {
+    td {
+        font-size: 6px;
+    }
+
+    th {
+        font-size: 6px;
+    }
+}

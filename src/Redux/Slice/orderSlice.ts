@@ -61,12 +61,18 @@ const filterParams = createAsyncThunk<IOrder, string>(
 const orderSlice = createSlice({
     name:'orderSlice',
     initialState,
-    reducers: {},
+    reducers: {
+
+        setOrders: (state, action) => {
+            state.orders = action.payload
+        }
+
+    },
     extraReducers: builder => builder
         .addCase(getAll.fulfilled, (state, action) => {
             state.orders = action.payload
         })
-        .addMatcher(isFulfilled(),(state, action)=>{
+        .addMatcher(isFulfilled(),(state)=>{
             state.isLoading =false
         })
         .addMatcher(isPending(),state=>{

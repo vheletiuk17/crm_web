@@ -1,14 +1,14 @@
-import React, {FC, useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import axios from 'axios'; // Імпортуємо Axios для виконання HTTP-запитів
 import css from './sort.module.css';
 import {loginService} from "../../Service/loginService";
-
-interface IProps{
-    filterOrders: (criteria: any) => void
-}
+import {useAppDispatch} from "../../Hook/reduxHooks";
+import {orderActions} from "../../Redux/Slice/orderSlice";
 
 
-const Sort:FC<IProps> = ({filterOrders}) => {
+
+
+const Sort = ({filterOrders}: { filterOrders: (criteria: any) => void }) => {
     const [name, setName] = useState(null);
     const [surname, setSurname] = useState(null);
     const [email, setEmail] = useState(null);
@@ -38,40 +38,39 @@ const Sort:FC<IProps> = ({filterOrders}) => {
     //     setEndDate('');
     //     setSearchResults([]); // Очистка результатів пошуку при скиданні
     // };
+    // };
+    const dispatch = useAppDispatch();
 
-    const filterOrder = async () => {
-        try {
-            const response = await axios.get('http://localhost:3003/orders/filtered', {
-                params: {
-                    surname,
-                    email,
-                    phone,
-                    age,
-                },
-                headers:{
-                    Authorization: `Bearer ${loginService.getAccessToken()}`
-                }
-            });
-            console.log(response.data);
-            setSearchResults(response.data);
-            // Оновлюємо результати пошуку з отриманими даними з сервера
-        } catch (error) {
-            console.error('Error filtering orders:', error);
-        }
-    };
+    useEffect(() => {
+        axios.get('http://localhost:3003/orders/filtered', {
+            params:{
+                name,
+                surname,
+                email,
+                phone,
+                age,
+
+            },
+            headers:{
+                Authorization: `Bearer ${loginService.getAccessToken()}`
+            }
+        })
+            .then(data => dispatch(orderActions.setOrders(data.data)))
+    }, [dispatch,name,surname, email, phone,age]);
 
     return (
         <div className={css.sort_container}>
             <div className={css.sort_btn_container}>
-                {/*<input className={css.btn} type="text" placeholder="id" value={id} onChange={(e) => setId(e.target.value)} />*/}
-                <input className={css.btn} type="text" placeholder="surname"   value={surname || ''} onChange={(e) => filterOrder} />
-                <input className={css.btn} type="email" placeholder="email" value={email} onChange={(e) => filterOrder()} />
-                <input className={css.btn} type="tel" placeholder="phone" value={phone}onChange={(e) => filterOrder()} />
+                <input className={css.btn} type="text" placeholder="name" value={name} onChange={(e) => setName(e.target.value)} />
+                <input className={css.btn} type="text" placeholder="surname"   value={surname} onChange={(e) =>setSurname(e.target.value) } />
+                <input className={css.btn} type="email" placeholder="email" value={email} onChange={(e) =>setEmail(e.target.value)} />
+                <input className={css.btn} type="tel" placeholder="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
                 <input className={css.btn} type="text" placeholder="age" value={age} onChange={(e) => setAge(e.target.value)} />
                 <input className={css.btn} type="text" placeholder="Start date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
+
                 <select className={css.btn_select} value={format} onChange={(e) => setFormat(e.target.value)}>
                     <option value="format">All Format</option>
-                    <option value="static">static</option>
+                    <option value='static'>static</option>
                     <option value="online">online</option>
                 </select>
 
@@ -94,7 +93,7 @@ const Sort:FC<IProps> = ({filterOrders}) => {
 
                 <select className={css.btn_select} value={course} onChange={(e) => setCourse(e.target.value)}>
                     <option value="All courses">All courses</option>
-                    <option value="FE">FE</option>
+                    <option value='fe'>FE</option>
                     <option value="FS">FS</option>
                     <option value="JSX">JSX</option>
                     <option value="QACX">QACX</option>
@@ -105,7 +104,7 @@ const Sort:FC<IProps> = ({filterOrders}) => {
             </div>
             <div className={css.btn_menu}>
                 <button className={css.reset_btn} >Reset</button>
-                <button className={css.search_btn} onClick={filterOrder}>Search</button>
+                <button className={css.search_btn} >Search</button>
             </div>
         </div>
     );

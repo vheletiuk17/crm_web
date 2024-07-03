@@ -67,3 +67,79 @@ select {
     align-items: center;
     margin-right: 20px;
 }
+
+@media (max-width: 1880px) {
+    .btn{
+        width: 200px;
+    }
+    .btn_select{
+        width: 215px;
+    }
+}
+@media (max-width: 1550px) {
+    .btn{
+        width: 150px;
+    }
+    .btn_select{
+        width: 165px;
+    }
+}
+@media (max-width: 1230px) {
+    .btn{
+        width: 100px;
+    }
+    .btn_select{
+        width: 115px;
+    }
+}
+@media (max-width: 950px) {
+    .btn{
+        width: 80px;
+    }
+    .btn_select{
+        width: 95px;
+    }
+    .sort_container{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 300px;
+    }
+    .reset_btn, .search_btn{
+        width: 100px;
+        border-radius: 12px;
+    }
+}
+
+@media (max-width: 830px) {
+    .sort_container{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 300px;
+    }
+    .reset_btn, .search_btn{
+        width: 100px;
+        border-radius: 12px;
+    }
+}
+
+@media (max-width: 705px) {
+    .sort_container{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 300px;
+    }
+    .btn{
+        width: 50px;
+    }
+    .btn_select{
+        width: 65px;
+    }
+    .reset_btn, .search_btn{
+        width: 70px;
+        border-radius: 12px;
+    }
+    
+}

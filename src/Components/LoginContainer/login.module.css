@@ -18,3 +18,9 @@
     background: white;
     box-shadow: 2px 5px 20px white;
 }
+@media(max-width: 600px) {
+    .login_container{
+        width: 300px;
+    }
+
+}

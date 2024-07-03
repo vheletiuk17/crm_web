@@ -5,7 +5,6 @@ import { Pagination, Stack} from "@mui/material";
 import {Order} from "../Order/Order";
 import css from './orders.module.css'
 import {useAppDispatch, useAppSelector} from "../../../Hook/reduxHooks";
-import {orderActions} from "../../../Redux/Slice/orderSlice";
 import {Sort} from "../../SortContainer/Sort";
 
 
@@ -35,8 +34,8 @@ const Orders: FC<IProps> = () => {
     }
 
     useEffect(() => {
-        dispatch(orderActions.getAll({page: page, sortBy: sort}))
-    }, [dispatch, page, sort]);
+        // dispatch(orderActions.getAll({page: page, sortBy: sort}))
+    }, [dispatch, page, sort, allOrders]);
 
     const getSortIcon = (key: string) => {
         const currentSort = query.get('sort');
@@ -58,7 +57,9 @@ const Orders: FC<IProps> = () => {
     };
     return (
         <>
-            <Sort filterOrders={filterOrders}/>
+            <div className={css.sort}>
+            <Sort  filterOrders={filterOrders}/>
+            </div>
             <table className={css.table_container}>
                 <thead className={css.header_table_name}>
                 <tr>

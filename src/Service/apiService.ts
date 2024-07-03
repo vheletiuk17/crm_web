@@ -34,8 +34,6 @@ apiService.interceptors.response.use(
                     runAfterRefresh();
                     if (originalRequest) {
                         return apiService(originalRequest); // Використовуємо originalRequest як аргумент
-                    } else {
-                        throw new Error('Original request missing');
                     }
                 } catch (e) {
                     loginService.deleteTokens();

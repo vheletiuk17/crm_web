@@ -28,48 +28,69 @@ table tr:nth-child(even) {
     background: green;
 }
 
-.id{
+.id {
     color: white;
 }
-.name{
+
+.name {
     color: white;
 }
-.surname{
-  color: white;
-}
-.email{
+
+.surname {
     color: white;
 }
-.phone{
+
+.email {
     color: white;
 }
-.age{
-   color: white;
-}
-.course{
+
+.phone {
     color: white;
 }
-.course_format{
+
+.age {
     color: white;
 }
-.course_type{
+
+.course {
     color: white;
 }
-.sumsum{
+
+.course_format {
     color: white;
 }
-.alreadyPaid{
+
+.course_type {
     color: white;
 }
-.created_at{
+
+.sumsum {
     color: white;
 }
-.status{
+
+.alreadyPaid {
     color: white;
 }
-.group{
+
+.created_at {
     color: white;
 }
-.manager{
+
+.status {
     color: white;
+}
+
+.group {
+    color: white;
+}
+
+.manager {
+    color: white;
+}
+
+
+@media (max-width: 890px) {
+.table_container{
+    height: 700px;
+}
 }
