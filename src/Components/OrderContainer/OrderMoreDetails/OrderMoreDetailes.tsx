@@ -5,7 +5,7 @@ import {Box, Button, Modal, TextField, Typography} from "@mui/material";
 import {green} from "@mui/material/colors";
 import {IComment} from "../../../Interface/commentInterface";
 // import {useAppDispatch} from "../../../Hook/reduxHooks";
-import {Sort} from "../../SortContainer/Sort";
+
 
 
 interface IProps {
@@ -92,7 +92,7 @@ const OrderMoreDetails: FC<IProps> = ({details}) => {
                 >
                     <Box sx={modalStyle}>
                         <Typography id="modal-modal-title" variant="h6" component="h2">
-                            <Sort/>
+
                         </Typography>
 
                     </Box>

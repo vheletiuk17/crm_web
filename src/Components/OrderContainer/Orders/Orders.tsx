@@ -1,11 +1,12 @@
-import {FC, PropsWithChildren, useEffect, useState} from "react";
+import {ChangeEvent, FC, PropsWithChildren, useEffect, useState} from "react";
 
 import {useSearchParams} from "react-router-dom";
-import {Box, LinearProgress, Pagination, Stack} from "@mui/material";
+import { Pagination, Stack} from "@mui/material";
 import {Order} from "../Order/Order";
 import css from './orders.module.css'
 import {useAppDispatch, useAppSelector} from "../../../Hook/reduxHooks";
 import {orderActions} from "../../../Redux/Slice/orderSlice";
+import {Sort} from "../../SortContainer/Sort";
 
 
 interface IProps extends PropsWithChildren {
@@ -13,11 +14,12 @@ interface IProps extends PropsWithChildren {
 }
 
 const Orders: FC<IProps> = () => {
-    const {orders, isLoading} = useAppSelector(state => state.order)
+    const {orders:allOrders} = useAppSelector(state => state.order)
     const dispatch = useAppDispatch()
     const [query, setQuery] = useSearchParams({page: '1', sort: '-id'});
     const page = query.get('page');
     const sort = query.get('sort');
+    const [, setOrders] = useState([]);
 
     function handleSortClick(key: string) {
         const currentSort = query.get('sort');
@@ -28,12 +30,11 @@ const Orders: FC<IProps> = () => {
         }
     }
 
-    function handleChange(event: React.ChangeEvent<unknown>, value: number) {
+    function handleChange(event: ChangeEvent<unknown>, value: number) {
         setQuery({sort: sort || '-id', page: value.toString()});
     }
 
     useEffect(() => {
-        // @ts-ignore
         dispatch(orderActions.getAll({page: page, sortBy: sort}))
     }, [dispatch, page, sort]);
 
@@ -44,10 +45,20 @@ const Orders: FC<IProps> = () => {
         return '';
     };
 
+    const filterOrders = (criteria: any) => {
+        const filtered = allOrders.data.filter((order: any) => {
+            // Perform filtering logic based on criteria
+            return (criteria.surname && order.surname.toLowerCase().includes(criteria.surname.toLowerCase())) ||
+                (criteria.email && order.email.toLowerCase().includes(criteria.email.toLowerCase())) ||
+                (criteria.phone && order.phone.toLowerCase().includes(criteria.phone.toLowerCase())) ||
+                (criteria.age && order.age === parseInt(criteria.age));
 
+        });
+        setOrders(filtered); // Зберегти відфільтровані замовлення у стані
+    };
     return (
         <>
-
+            <Sort filterOrders={filterOrders}/>
             <table className={css.table_container}>
                 <thead className={css.header_table_name}>
                 <tr>
@@ -89,13 +100,13 @@ const Orders: FC<IProps> = () => {
                 <tbody>
                 </tbody>
 
-                {orders.data.map((item) => (<Order key={item.id} order={item}/>))}
+                {allOrders.data.map((item) => (<Order key={item.id} order={item}/>))}
             </table>
             <div className={css.btn_page}>
                 <Stack spacing={2}>
                     <Pagination
-                        count={orders.meta.total}
-                        page={orders.meta.page}
+                        count={allOrders.meta.total}
+                        page={allOrders.meta.page}
                         onChange={handleChange}
                         size="medium"
                         sx={{
