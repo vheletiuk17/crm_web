@@ -38,7 +38,6 @@ const Login = () => {
                                    size={"small"}
                                    margin={"normal"} fullWidth={true}
                                    onChange={(e) => field.onChange(e)}
-                                   value={field.value}
                                    error={!!errors.email}
                                    helperText={errors.email ? errors.email.message : ''}
                                    sx={{
@@ -59,7 +58,6 @@ const Login = () => {
                                    margin={"normal"}
                                    fullWidth={true}
                                    onChange={(e) => field.onChange(e)}
-                                   value={field.value}
                                    error={!!errors.password}
                                    helperText={errors.password ? errors.password.message : ''}
                                    sx={{

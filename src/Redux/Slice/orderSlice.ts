@@ -39,7 +39,6 @@ const getAll = createAsyncThunk<IPageOrder, IGetAllArgs>(
             return data
         } catch (e) {
             const err = e as AxiosError;
-            // @ts-ignore
             return rejectWithValue(err.response.data)
         }
     }

@@ -6,6 +6,7 @@ import {Order} from "../Order/Order";
 import css from './orders.module.css'
 import {useAppDispatch, useAppSelector} from "../../../Hook/reduxHooks";
 import {Sort} from "../../SortContainer/Sort";
+import {orderActions} from "../../../Redux/Slice/orderSlice";
 
 
 interface IProps extends PropsWithChildren {
@@ -34,8 +35,8 @@ const Orders: FC<IProps> = () => {
     }
 
     useEffect(() => {
-        // dispatch(orderActions.getAll({page: page, sortBy: sort}))
-    }, [dispatch, page, sort, allOrders]);
+        dispatch(orderActions.getAll({page: page, sortBy: sort}))
+    }, [dispatch, page, sort]);
 
     const getSortIcon = (key: string) => {
         const currentSort = query.get('sort');

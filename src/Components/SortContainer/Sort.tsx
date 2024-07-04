@@ -4,6 +4,8 @@ import css from './sort.module.css';
 import {loginService} from "../../Service/loginService";
 import {useAppDispatch} from "../../Hook/reduxHooks";
 import {orderActions} from "../../Redux/Slice/orderSlice";
+import {Simulate} from "react-dom/test-utils";
+import error = Simulate.error;
 
 
 
@@ -20,8 +22,8 @@ const Sort = ({filterOrders}: { filterOrders: (criteria: any) => void }) => {
     const [status, setStatus] = useState('All status');
     const [group, setGroup] = useState('All group');
     const [course, setCourse] = useState('All courses');
-    const [endDate, setEndDate] = useState(null);
-    const [searchResults, setSearchResults] = useState([]);
+    const [fe, setFe] = useState( null)
+
 
     // const handleReset = () => {
     //     setName('');
@@ -42,6 +44,20 @@ const Sort = ({filterOrders}: { filterOrders: (criteria: any) => void }) => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
+        console.log( `Bearer ${loginService.getAccessToken()}`);
+
+        const fetchData = async () =>{
+            const accessToken = loginService.getAccessToken();
+            if (!accessToken){
+                try {
+                    await loginService.refresh();
+                }catch (e){
+                    console.error('Failed to refresh token:', error);
+                    return
+                }
+            }
+        }
+
         axios.get('http://localhost:3003/orders/filtered', {
             params:{
                 name,
@@ -54,24 +70,27 @@ const Sort = ({filterOrders}: { filterOrders: (criteria: any) => void }) => {
             headers:{
                 Authorization: `Bearer ${loginService.getAccessToken()}`
             }
+
         })
+
             .then(data => dispatch(orderActions.setOrders(data.data)))
-    }, [dispatch,name,surname, email, phone,age]);
+        fetchData()
+        }, [dispatch,name,surname, email, phone,age, ]);
 
     return (
         <div className={css.sort_container}>
             <div className={css.sort_btn_container}>
-                <input className={css.btn} type="text" placeholder="name" value={name} onChange={(e) => setName(e.target.value)} />
-                <input className={css.btn} type="text" placeholder="surname"   value={surname} onChange={(e) =>setSurname(e.target.value) } />
-                <input className={css.btn} type="email" placeholder="email" value={email} onChange={(e) =>setEmail(e.target.value)} />
-                <input className={css.btn} type="tel" placeholder="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
-                <input className={css.btn} type="text" placeholder="age" value={age} onChange={(e) => setAge(e.target.value)} />
-                <input className={css.btn} type="text" placeholder="Start date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
+                <input className={css.btn} type="text" placeholder="name" value={name !== null ? name : ''} onChange={(e) => setName(e.target.value)} />
+                <input className={css.btn} type="text" placeholder="surname"   value={surname !== null ? surname : ''} onChange={(e) =>setSurname(e.target.value) } />
+                <input className={css.btn} type="email" placeholder="email" value={email !== null ? email : ''} onChange={(e) =>setEmail(e.target.value)} />
+                <input className={css.btn} type="tel" placeholder="phone" value={phone !== null ? phone : ''} onChange={(e) => setPhone(e.target.value)} />
+                <input className={css.btn} type="number" placeholder="age" value={age !== null ? age : ''} onChange={(e) => setAge(e.target.value)} />
+                <input className={css.btn} type="text" placeholder="Start date" value={startDate !== null ? startDate : ''} onChange={(e) => setStartDate(e.target.value)} />
 
                 <select className={css.btn_select} value={format} onChange={(e) => setFormat(e.target.value)}>
                     <option value="format">All Format</option>
-                    <option value='static'>static</option>
-                    <option value="online">online</option>
+                    <option value='statics'>static</option>
+                    <option value='o'>online</option>
                 </select>
 
                 <select className={css.btn_select} value={type} onChange={(e) => setType(e.target.value)}>
@@ -93,14 +112,13 @@ const Sort = ({filterOrders}: { filterOrders: (criteria: any) => void }) => {
 
                 <select className={css.btn_select} value={course} onChange={(e) => setCourse(e.target.value)}>
                     <option value="All courses">All courses</option>
-                    <option value='fe'>FE</option>
+                    <option value={fe}>FE</option>
                     <option value="FS">FS</option>
                     <option value="JSX">JSX</option>
                     <option value="QACX">QACX</option>
                     <option value="JSCX">JSCX</option>
                 </select>
 
-                <input className={css.btn} type="text" placeholder="End date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
             </div>
             <div className={css.btn_menu}>
                 <button className={css.reset_btn} >Reset</button>
