@@ -44,38 +44,43 @@ const Sort = ({filterOrders}: { filterOrders: (criteria: any) => void }) => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        console.log( `Bearer ${loginService.getAccessToken()}`);
-
-        const fetchData = async () =>{
+        const fetchData = async () => {
             const accessToken = loginService.getAccessToken();
-            if (!accessToken){
+            console.log(accessToken);
+            if (!accessToken) {
                 try {
                     await loginService.refresh();
-                }catch (e){
+                } catch (error) {
                     console.error('Failed to refresh token:', error);
-                    return
+                    return;
                 }
             }
-        }
 
-        axios.get('http://localhost:3003/orders/filtered', {
-            params:{
-                name,
-                surname,
-                email,
-                phone,
-                age,
+            axios.get('http://localhost:3003/orders/filtered', {
+                params: {
+                    name,
+                    surname,
+                    email,
+                    phone,
+                    age,
+                },
+                headers: {
+                    Authorization: `Bearer ${loginService.getAccessToken()}`
+                }
+            })
+                .then(response => {
+                    dispatch(orderActions.setOrders(response.data));
+                    console.log( response.data); // Logging the fetched data
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
 
-            },
-            headers:{
-                Authorization: `Bearer ${loginService.getAccessToken()}`
-            }
+        };
 
-        })
+        fetchData();
+    }, [dispatch, name, surname, email, phone, age]);
 
-            .then(data => dispatch(orderActions.setOrders(data.data)))
-        fetchData()
-        }, [dispatch,name,surname, email, phone,age, ]);
 
     return (
         <div className={css.sort_container}>

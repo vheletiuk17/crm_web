@@ -12,9 +12,14 @@ const loginService = {
 
     async login(user: IAuth): Promise<ITokens> {
         const {data} = await apiService.post(urls.auth.login, user)
-        localStorage.setItem(accessTokenKey, data.accessToken)
-        localStorage.setItem(refreshTokenKey, data.refreshToken); // зберігаємо refreshToken
-        return data
+        if (data.accessToken && data.refreshToken) {
+            localStorage.setItem(accessTokenKey, data.accessToken);
+            localStorage.setItem(refreshTokenKey, data.refreshToken);
+            console.log('Access token saved to localStorage:', data.accessToken);
+            console.log('Refresh token saved to localStorage:', data.refreshToken);
+
+            return data;
+        }
     },
 
     async refresh(): Promise<void> {
@@ -28,6 +33,7 @@ const loginService = {
             );
 
             localStorage.setItem(accessTokenKey, data.accessToken);
+            console.log(accessTokenKey, data.accessToken);
         } catch (error) {
             console.error('Failed to refresh access token:', error);
         }

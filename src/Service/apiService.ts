@@ -28,7 +28,6 @@ apiService.interceptors.response.use(
             if (!isRefreshing) {
                 isRefreshing = true;
                 try {
-                    console.log('originalRequest', originalRequest);
                     await loginService.refresh();
                     isRefreshing = false;
                     runAfterRefresh();

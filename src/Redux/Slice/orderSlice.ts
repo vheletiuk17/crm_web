@@ -46,9 +46,9 @@ const getAll = createAsyncThunk<IPageOrder, IGetAllArgs>(
 
 const filterParams = createAsyncThunk<IOrder, string>(
     'orderSlice/filterOrders',
-    async (filterArgs, { rejectWithValue }) => {
+    async (filterArgs, {rejectWithValue}) => {
         try {
-            const { data } = await orderService.filter(filterArgs);
+            const {data} = await orderService.filter(filterArgs);
             return data;
         } catch (e) {
             const err = e as AxiosError;
@@ -58,34 +58,33 @@ const filterParams = createAsyncThunk<IOrder, string>(
 );
 
 const orderSlice = createSlice({
-    name:'orderSlice',
-    initialState,
-    reducers: {
+        name: 'orderSlice',
+        initialState,
+        reducers: {
 
-        setOrders: (state, action) => {
-            state.orders = action.payload
-        }
+            setOrders: (state, action) => {
+                state.orders = action.payload
+            }
 
-    },
-    extraReducers: builder => builder
-        .addCase(getAll.fulfilled, (state, action) => {
-            state.orders = action.payload
-        })
-        .addMatcher(isFulfilled(),(state)=>{
-            state.isLoading =false
-        })
-        .addMatcher(isPending(),state=>{
-            state.isLoading =true
-        } )
-        .addMatcher(isFulfilled(filterParams), (state) => { // Використовуємо isFulfilled з filterOrders
-            state.isLoading = false;
-        })
-        .addMatcher(isPending(filterParams), (state) => { // Використовуємо isPending з filterOrders
-            state.isLoading = true;
-        }),
+        },
+        extraReducers: builder => builder
+            .addCase(getAll.fulfilled, (state, action) => {
+                state.orders = action.payload
+            })
+            .addMatcher(isFulfilled(), (state) => {
+                state.isLoading = false
+            })
+            .addMatcher(isPending(), state => {
+                state.isLoading = true
+            })
+            .addMatcher(isFulfilled(filterParams), (state) => { // Використовуємо isFulfilled з filterOrders
+                state.isLoading = false;
+            })
+            .addMatcher(isPending(filterParams), (state) => { // Використовуємо isPending з filterOrders
+                state.isLoading = true;
+            }),
     }
 )
-
 
 
 const {reducer: orderReducer, actions} = orderSlice
