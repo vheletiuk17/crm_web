@@ -1,13 +1,9 @@
-import React, { useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios'; // Імпортуємо Axios для виконання HTTP-запитів
 import css from './sort.module.css';
 import {loginService} from "../../Service/loginService";
 import {useAppDispatch} from "../../Hook/reduxHooks";
 import {orderActions} from "../../Redux/Slice/orderSlice";
-import {Simulate} from "react-dom/test-utils";
-import error = Simulate.error;
-
-
 
 
 const Sort = ({filterOrders}: { filterOrders: (criteria: any) => void }) => {
@@ -22,25 +18,27 @@ const Sort = ({filterOrders}: { filterOrders: (criteria: any) => void }) => {
     const [status, setStatus] = useState('All status');
     const [group, setGroup] = useState('All group');
     const [course, setCourse] = useState('All courses');
-    const [fe, setFe] = useState( null)
+    const [FE, setFE] = useState('');
+    const [JSX, setJSX] = useState(null);
+    const [JSXX, setJSXX] = useState(null);
+    const [FS, setFS] = useState(null);
+    const [QACX, setQACX] = useState(null);
 
 
-    // const handleReset = () => {
-    //     setName('');
-    //     setSurname('');
-    //     setEmail('');
-    //     setPhone('');
-    //     setAge('');
-    //     setStartDate('');
-    //     setFormat('format');
-    //     setType('All type');
-    //     setStatus('All status');
-    //     setGroup('All group');
-    //     setCourse('All courses');
-    //     setEndDate('');
-    //     setSearchResults([]); // Очистка результатів пошуку при скиданні
-    // };
-    // };
+
+    const handleReset = () => {
+        setName('');
+        setSurname('');
+        setEmail('');
+        setPhone('');
+        setAge('');
+        setStartDate('');
+        setFormat('format');
+        setType('All type');
+        setStatus('All status');
+        setGroup('All group');
+        setCourse('All courses');
+    };
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -63,6 +61,12 @@ const Sort = ({filterOrders}: { filterOrders: (criteria: any) => void }) => {
                     email,
                     phone,
                     age,
+                    FE,
+                    JSX,
+                    JSXX,
+                    FS,
+                    course,
+
                 },
                 headers: {
                     Authorization: `Bearer ${loginService.getAccessToken()}`
@@ -70,7 +74,6 @@ const Sort = ({filterOrders}: { filterOrders: (criteria: any) => void }) => {
             })
                 .then(response => {
                     dispatch(orderActions.setOrders(response.data));
-                    console.log( response.data); // Logging the fetched data
                 })
                 .catch(error => {
                     console.error('Error fetching data:', error);
@@ -78,19 +81,25 @@ const Sort = ({filterOrders}: { filterOrders: (criteria: any) => void }) => {
 
         };
 
-        fetchData();
-    }, [dispatch, name, surname, email, phone, age]);
+        fetchData().then(() => console.log(loginService.getAccessToken));
+    }, [dispatch, name, surname, email, phone, age,FE,JSX,JSXX,FS,course]);
 
 
     return (
         <div className={css.sort_container}>
             <div className={css.sort_btn_container}>
-                <input className={css.btn} type="text" placeholder="name" value={name !== null ? name : ''} onChange={(e) => setName(e.target.value)} />
-                <input className={css.btn} type="text" placeholder="surname"   value={surname !== null ? surname : ''} onChange={(e) =>setSurname(e.target.value) } />
-                <input className={css.btn} type="email" placeholder="email" value={email !== null ? email : ''} onChange={(e) =>setEmail(e.target.value)} />
-                <input className={css.btn} type="tel" placeholder="phone" value={phone !== null ? phone : ''} onChange={(e) => setPhone(e.target.value)} />
-                <input className={css.btn} type="number" placeholder="age" value={age !== null ? age : ''} onChange={(e) => setAge(e.target.value)} />
-                <input className={css.btn} type="text" placeholder="Start date" value={startDate !== null ? startDate : ''} onChange={(e) => setStartDate(e.target.value)} />
+                <input className={css.btn} type="text" placeholder="name" value={name !== null ? name : ''}
+                       onChange={(e) => setName(e.target.value)}/>
+                <input className={css.btn} type="text" placeholder="surname" value={surname !== null ? surname : ''}
+                       onChange={(e) => setSurname(e.target.value)}/>
+                <input className={css.btn} type="email" placeholder="email" value={email !== null ? email : ''}
+                       onChange={(e) => setEmail(e.target.value)}/>
+                <input className={css.btn} type="tel" placeholder="phone" value={phone !== null ? phone : ''}
+                       onChange={(e) => setPhone(e.target.value)}/>
+                <input className={css.btn} type="number" placeholder="age" value={age !== null ? age : ''}
+                       onChange={(e) => setAge(e.target.value)}/>
+                <input className={css.btn} type="text" placeholder="Start date"
+                       value={startDate !== null ? startDate : ''} onChange={(e) => setStartDate(e.target.value)}/>
 
                 <select className={css.btn_select} value={format} onChange={(e) => setFormat(e.target.value)}>
                     <option value="format">All Format</option>
@@ -117,20 +126,20 @@ const Sort = ({filterOrders}: { filterOrders: (criteria: any) => void }) => {
 
                 <select className={css.btn_select} value={course} onChange={(e) => setCourse(e.target.value)}>
                     <option value="All courses">All courses</option>
-                    <option value={fe}>FE</option>
-                    <option value="FS">FS</option>
-                    <option value="JSX">JSX</option>
-                    <option value="QACX">QACX</option>
-                    <option value="JSCX">JSCX</option>
+                    <option value={FE}>FE</option>
+                    <option value={FS}>FS</option>
+                    <option value={JSX}>JSX</option>
+                    <option value={QACX}>QACX</option>
+                    <option value={JSXX}>JSCX</option>
                 </select>
 
             </div>
             <div className={css.btn_menu}>
-                <button className={css.reset_btn} >Reset</button>
-                <button className={css.search_btn} >Search</button>
+                <button className={css.reset_btn}>Reset</button>
+                <button className={css.search_btn}>Search</button>
             </div>
         </div>
     );
 };
 
-export { Sort };
+export {Sort};

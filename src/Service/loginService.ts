@@ -15,32 +15,21 @@ const loginService = {
         if (data.accessToken && data.refreshToken) {
             localStorage.setItem(accessTokenKey, data.accessToken);
             localStorage.setItem(refreshTokenKey, data.refreshToken);
-            console.log('Access token saved to localStorage:', data.accessToken);
-            console.log('Refresh token saved to localStorage:', data.refreshToken);
+            console.log( data.refreshToken);
+            console.log( data.accessToken);
 
-            return data;
+            return data.accessToken;
         }
     },
 
-    async refresh(): Promise<void> {
-        const refreshToken = localStorage.getItem(refreshTokenKey);
-
-        try {
-            const { data } = await axios.post(
-                `${baseURL}${urls.auth.refresh}`,
-                { refreshToken },
-                { withCredentials: true }
-            );
-
-            localStorage.setItem(accessTokenKey, data.accessToken);
-            console.log(accessTokenKey, data.accessToken);
-        } catch (error) {
-            console.error('Failed to refresh access token:', error);
-        }
+    refresh: async function (): Promise<void> {
+        const {data} = await axios.post(`${baseURL}${urls.auth.refresh}`, {accessTokenKey}, {withCredentials: true})
+        localStorage.setItem(accessTokenKey, data.accessToken)
+        console.log(data.accessToken);
     },
-
     getAccessToken(): string | null {
         return  localStorage.getItem(accessTokenKey)
+
     },
 
 

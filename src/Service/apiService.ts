@@ -1,8 +1,9 @@
 import axios, {AxiosError} from "axios";
-import {loginService} from "./loginService";
-import {baseURL, urls} from "../Constants/urls";
 
 import {router} from "../router";
+import {baseURL, urls} from "../Constants/urls";
+import {loginService} from "./loginService";
+import {log} from "node:util";
 
 const apiService = axios.create({withCredentials: true, baseURL})
 let isRefreshing = false // захист від повторного запуску refresh токенів
@@ -12,7 +13,7 @@ const waitList: IWaitList[] = []
 
 apiService.interceptors.request.use(req => {
     const access = loginService.getAccessToken();
-
+    console.log(access);
     if (access) {
         req.headers.Authorization = `Bearer ${access}`
     }
@@ -21,45 +22,41 @@ apiService.interceptors.request.use(req => {
 })
 
 apiService.interceptors.response.use(
-    res => res,
+    res => {
+        console.log(res)
+        return res
+    },
     async (error: AxiosError) => {
         const originalRequest = error.config;
-        if (error.response && error.response.status === 401) {
+        if (error.response.status === 401) {
             if (!isRefreshing) {
-                isRefreshing = true;
+                isRefreshing = true
                 try {
-                    await loginService.refresh();
-                    isRefreshing = false;
-                    runAfterRefresh();
-                    if (originalRequest) {
-                        return apiService(originalRequest); // Використовуємо originalRequest як аргумент
-                    }
+                    await loginService.refresh()
+                    isRefreshing = false
+                    runAfterRefresh()
+                    return apiService(originalRequest)
                 } catch (e) {
-                    loginService.deleteTokens();
-                    isRefreshing = false;
-                    router.navigate('/sing-in?SessionExpired=true');
-                    return Promise.reject(error);
+                    loginService.deleteTokens() // видаляє токен якщо виникла помилка рефреш не пройшов
+                    isRefreshing = false
+                    router.navigate('/login')
+                    return Promise.reject(error)
                 }
             }
 
-            if (originalRequest && originalRequest.url === urls.auth.refresh) {
-                return Promise.reject(error);
+            if (originalRequest.url === urls.auth.refresh) {
+                return Promise.reject(error)
             }
 
             return new Promise(resolve => {
                 subscribeToWaitList(() => {
-                    if (originalRequest) {
-                        resolve(apiService(originalRequest)); // Використовуємо originalRequest як аргумент
-                    } else {
-                        resolve(Promise.reject(error));
-                    }
-                });
-            });
+                    resolve(apiService(originalRequest))
+                })
+            })
         }
-        return Promise.reject(error);
+        return Promise.reject(error)
     }
-);
-
+)
 
 const subscribeToWaitList = (cb: IWaitList): void => {
     waitList.push(cb)
@@ -68,9 +65,7 @@ const subscribeToWaitList = (cb: IWaitList): void => {
 const runAfterRefresh = (): void => {
     while (waitList.length) {
         const cb = waitList.pop();
-        if (cb) {
-            cb()
-        }
+        cb()
     }
 }
 
